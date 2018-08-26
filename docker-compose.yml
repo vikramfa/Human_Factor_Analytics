@@ -1,0 +1,20 @@
+version: "3"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:3-management
+    environment:
+       - RABBITMQ_DEFAULT_USER = guest
+       - RABBITMQ_DEFAULT_PASS = guest
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+
+  serviceapi-iot:
+    container_name: serviceapi-iotanalytics
+    image: iotanalytics:latest
+    depends_on:
+        - rabbitmq:rabbitmq
+    ports:
+        - "5000:5000"
